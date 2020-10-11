@@ -1,36 +1,33 @@
-module complex_number = {
-    type c = {real: f64, imaginary: f64}
+type complex = {real: f64, imaginary: f64}
 
-    let magnitude (number: c): f64 =
-        let {real=re, imaginary=im} = number
-        in
-            f64.sqrt ((re*re) + (im*im))
+let magnitude (number: complex): f64 =
+    let {real=re, imaginary=im} = number
+    in
+        f64.sqrt ((re*re) + (im*im))
 
-    let square (number: c): c = number
+let square (number: complex): complex = number
 
-    let add (first: c) (second: c): c =
-        {real = first.real + second.real, imaginary = first.imaginary + second.imaginary}
+let add (first: complex) (second: complex): complex =
+    {real = first.real + second.real, imaginary = first.imaginary + second.imaginary}
 
-    let mul (first: c) (second: c): c =
-        let {real=a, imaginary=b} = first
-        let {real=c, imaginary=d} = second
-        in
-            { real = a*c - b * d, imaginary = a*d + b * c}
+let mul (first: complex) (second: complex): complex =
+    let {real=a, imaginary=b} = first
+    let {real=c, imaginary=d} = second
+    in
+        { real = a*c - b * d, imaginary = a*d + b * c}
 
-    let dot (number: c): f64 =
-        let {real=re, imaginary=im} = number
-        in
-            re*re + im*im
-}
+let dot (number: complex): f64 =
+    let {real=re, imaginary=im} = number
+    in
+        re*re + im*im
 
-type complex = complex_number.c
 type rect = {top: f64, left: f64, width: f64, height: f64}
 
 -- How many iterations until the value starts diverging?
 let iterations (max_iterations: u32) (upper_bound: f64) (c: complex) (initial_z: complex): u32 =
     let (i, _) = iterate_while
-        (\(i, z) -> i < max_iterations && (complex_number.magnitude z) < upper_bound)
-        (\(i, z) -> (i+1, (complex_number.add (complex_number.square z) c)))
+        (\(i, z) -> i < max_iterations && (magnitude z) < upper_bound)
+        (\(i, z) -> (i+1, (add (square z) c)))
         (0, initial_z)
     in
         i
