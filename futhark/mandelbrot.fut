@@ -3,12 +3,13 @@ type complex = {real: f64, imaginary: f64}
 let magnitude (number: complex): f64 =
     let {real=re, imaginary=im} = number
     in
-        f64.sqrt ((re*re) + (im*im))
-
-let square (number: complex): complex = number
+        f64.sqrt (re*re) + (im*im)
 
 let add (first: complex) (second: complex): complex =
-    {real = first.real + second.real, imaginary = first.imaginary + second.imaginary}
+    let {real=a, imaginary=b} = first
+    let {real=c, imaginary=d} = second
+    in
+        { real = a+c, imaginary = b+d }
 
 let mul (first: complex) (second: complex): complex =
     let {real=a, imaginary=b} = first
@@ -16,12 +17,13 @@ let mul (first: complex) (second: complex): complex =
     in
         { real = a*c - b * d, imaginary = a*d + b * c}
 
+let square (c: complex): complex = mul c c
+
 let dot (number: complex): f64 =
     let {real=re, imaginary=im} = number
     in
         re*re + im*im
 
-type rect = {top: f64, left: f64, width: f64, height: f64}
 
 -- How many iterations until the value starts diverging?
 let iterations (max_iterations: u32) (upper_bound: f64) (c: complex) (initial_z: complex): u32 =
@@ -31,6 +33,8 @@ let iterations (max_iterations: u32) (upper_bound: f64) (c: complex) (initial_z:
         (0, initial_z)
     in
         i
+
+type rect = {top: f64, left: f64, width: f64, height: f64}
 
 let upper_bound: f64 = 4.0
 let max_iterations: u32 = 200
