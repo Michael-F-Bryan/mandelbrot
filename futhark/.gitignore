@@ -1,0 +1,7 @@
+lib/
+*.c
+*.h
+mandelbrot
+*_test
+*.expected
+*.actual
