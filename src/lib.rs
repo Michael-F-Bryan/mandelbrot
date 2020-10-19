@@ -1,4 +1,4 @@
-#[test]
-fn it_works() {
-    assert_eq!(2 + 2, 4);
+#[allow(non_camel_case_types)]
+pub mod ffi {
+    include!(concat!(env!("OUT_DIR"), "/mandelbrot.rs"));
 }
